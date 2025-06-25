@@ -1,9 +1,11 @@
-{% extends 'header.html' %} {% block content %} {% if request.user.is_authenticated %}
-<h2 class="text-center">Bienvenido {{ user.username | upper }}!</h2>
-{% else %}
-<h2 class="text-center">Bienvenido!</h2>
-{% endif %}
-<p class="text-center">
-    Mirá las imágenes desde <a href="{% url 'home' %}">este link.</a>
-</p>
+{% extends 'header.html' %} {% block content %}
+<div class="container mt-5 text-center">
+    {% if user.is_authenticated %}
+    <h1 class="mb-4">Bienvenido {{ user.username|upper }}!</h1>
+    <p>Mirá las imágenes desde <a href="{% url 'home' %}">este link</a>.</p>
+    {% else %}
+    <h1 class="mb-4">Bienvenido!</h1>
+    <p>Mirá las imágenes desde <a href="{% url 'home' %}">este link</a>.</p>
+    {% endif %}
+</div>
 {% endblock %}
