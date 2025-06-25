@@ -31,13 +31,18 @@
         </form>
     </div>
 
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         {% if images|length == 0 %}
         <h2 class="text-center">La búsqueda no arrojó resultados...</h2>
         {% else %} {% for img in images %}
         <div class="col">
-            <!-- evaluar si la imagen pertenece al tipo fuego, agua o planta -->
-            <div class="card border-success mb-3 ms-5" style="max-width: 540px; ">
+            <!-- Aquí cambiamos el borde según el tipo del Pokémon -->
+            <div class="card 
+                {% if 'fire' in img.types %}border-danger
+                {% elif 'water' in img.types %}border-primary
+                {% elif 'grass' in img.types %}border-success
+                {% else %}border-warning{% endif %} 
+                mb-3 ms-5" style="max-width: 540px; ">
                  <div class="row g-0">
                      <div class="col-md-4">
                          <img src="{{ img.image }}" class="card-img-top"alt="imagen">
@@ -80,29 +85,3 @@
     </div>
 </main>
 {% endblock %}
-
-
-{% for pokemon in pokemons %}
-  {% with pokemon.types.0 as main_type %}
-    {% if main_type == "grass" %}
-      {% set border_class = "border-success" %}
-    {% elif main_type == "fire" %}
-      {% set border_class = "border-danger" %}
-    {% elif main_type == "water" %}
-      {% set border_class = "border-primary" %}
-    {% else %}
-      {% set border_class = "border-warning" %}
-    {% endif %}
-  {% endwith %}
-
-  <div class="card m-2 {{ border_class }}" style="width: 14rem; border-width: 3px;">
-    <div class="card-body">
-      <h5 class="card-title text-capitalize">{{ pokemon.name }}</h5>
-      <img src="{{ pokemon.image_url }}" class="card-img-top" alt="{{ pokemon.name }}">
-      <p class="card-text"><strong>Tipo:</strong> {{ pokemon.types|join:", " }}</p>
-      <p class="card-text"><strong>Altura:</strong> {{ pokemon.height }} m</p>
-      <p class="card-text"><strong>Peso:</strong> {{ pokemon.weight }} kg</p>
-    </div>
-  </div>
-{% endfor %}
-
