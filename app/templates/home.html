@@ -80,3 +80,29 @@
     </div>
 </main>
 {% endblock %}
+
+
+{% for pokemon in pokemons %}
+  {% with pokemon.types.0 as main_type %}
+    {% if main_type == "grass" %}
+      {% set border_class = "border-success" %}
+    {% elif main_type == "fire" %}
+      {% set border_class = "border-danger" %}
+    {% elif main_type == "water" %}
+      {% set border_class = "border-primary" %}
+    {% else %}
+      {% set border_class = "border-warning" %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="card m-2 {{ border_class }}" style="width: 14rem; border-width: 3px;">
+    <div class="card-body">
+      <h5 class="card-title text-capitalize">{{ pokemon.name }}</h5>
+      <img src="{{ pokemon.image_url }}" class="card-img-top" alt="{{ pokemon.name }}">
+      <p class="card-text"><strong>Tipo:</strong> {{ pokemon.types|join:", " }}</p>
+      <p class="card-text"><strong>Altura:</strong> {{ pokemon.height }} m</p>
+      <p class="card-text"><strong>Peso:</strong> {{ pokemon.weight }} kg</p>
+    </div>
+  </div>
+{% endfor %}
+
