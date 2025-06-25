@@ -10,9 +10,9 @@ from django.contrib.auth import get_user
 """def getAllImages():
    listaDeCards = []
    Listajson = transport.getAllImages()
-   for datos in Listajson:
-    translator.fromRequestIntoCard(poke_data = datos)
-    listaDeCards.append(datos)
+   for dato in Listajson:
+    translator.fromRequestIntoCard(poke_data = dato)
+    listaDeCards.append(dato)
     # debe ejecutar los siguientes pasos:
     # 1) traer un listado de imágenes crudas desde la API (ver transport.py)
     # 2) convertir cada img. en una card.
