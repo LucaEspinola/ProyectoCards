@@ -6,33 +6,16 @@ from ..persistence import repositories
 from ..utilities import translator
 from django.contrib.auth import get_user
 
-# función que devuelve un listado de cards. Cada card representa una imagen de la API de Pokemon
-"""def getAllImages():
-   listaDeCards = []
-   Listajson = transport.getAllImages()
-   for dato in Listajson:
-    translator.fromRequestIntoCard(poke_data = dato)
-    listaDeCards.append(dato)
-    # debe ejecutar los siguientes pasos:
-    # 1) traer un listado de imágenes crudas desde la API (ver transport.py)
-    # 2) convertir cada img. en una card.
-    # 3) añadirlas a un nuevo listado que, finalmente, se retornará con todas las card encontradas.
-    pass
-   return listaDeCards """
-   # función que devuelve un listado de cards. Cada card representa una imagen de la API de Pokemon
+
 def getAllImages():
-    # 1) traer un listado de imágenes crudas desde la API (ver transport.py)
+   
     raw_images = transport.getAllImages()
-    
-    # 2) convertir cada img. en una card.
-    # 3) añadirlas a un nuevo listado que, finalmente, se retornará con todas las card encontradas.
     cards = []
     
     for raw_image in raw_images:
-        # Convertimos cada imagen cruda en una Card usando el translator
         card = translator.fromRequestIntoCard(raw_image)
         
-        # Añadimos la card al listado final
+
         if card:
             cards.append(card)
     
@@ -55,8 +38,10 @@ def filterByType(type_filter):
     filtered_cards = []
 
     for card in getAllImages():
-        # debe verificar si la casa de la card coincide con la recibida por parámetro. Si es así, se añade al listado de filtered_cards.
-        filtered_cards.append(card)
+        # Verificar si el tipo del Pokémon coincide con el tipo recibido por parámetro
+        if hasattr(card, 'types') and type_filter in card.types:
+            # Si coincide, añadirlo al listado de filtered_cards
+            filtered_cards.append(card)
 
     return filtered_cards
 
