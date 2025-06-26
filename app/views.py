@@ -20,7 +20,7 @@ def search(request):
 
     # si el usuario ingresó algo en el buscador, se deben filtrar las imágenes por dicho ingreso.
     if (name != ''):
-        images = []
+        images = services.filterByCharacter(name) 
         favourite_list = []
 
         return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
@@ -32,15 +32,10 @@ def filter_by_type(request):
     type = request.POST.get('type', '')
 
     if type != '':
-        # Usar el servicio para filtrar por tipo
-        images = services.filterByType(type)
-        
-        # Si el usuario está autenticado, obtener sus favoritos
+        images = [] # debe traer un listado filtrado de imágenes, segun si es o contiene ese tipo.
         favourite_list = []
-        if request.user.is_authenticated:
-            favourite_list = services.getAllFavourites(request)
 
-        return render(request, 'home.html', {'images': images, 'favourite_list': favourite_list})
+        return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
     else:
         return redirect('home')
 
@@ -61,3 +56,4 @@ def deleteFavourite(request):
 def exit(request):
     logout(request)
     return redirect('home')
+
